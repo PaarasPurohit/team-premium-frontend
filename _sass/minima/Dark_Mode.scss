@@ -1,14 +1,13 @@
 $high-emph: rgba(white, 0.87);
 $med-emph: rgba(white, 0.69); 
 $low-emph: rgba(white, 0.38);
-$dark-grey : #121212; 
-// $dark-grey : #1F1B24;
-$overlay: mix($dark-grey, white, 95%);
-$overlay-light: mix($dark-grey, white, 86%);
+// #250070 : #1F1B24;
+$overlay: mix(#250070, white, 95%);
+$overlay-light: mix(#250070, white, 86%);
 
 html, body, input, textarea, select, button {   
   color: $high-emph !important;
-  background-color: $dark-grey !important;
+  background-color: #250070 !important;
 }
 
 a {
@@ -24,12 +23,12 @@ a:hover {
 }
 
 .site-nav {
-    background-color: $dark-grey;
+    background-color: #250070;
     border-color: $overlay-light;
 }
 
 * {
-    scrollbar-color: $dark-grey $overlay-light;
+    scrollbar-color: #250070 $overlay-light;
 }
 
 pre, code {
@@ -57,7 +56,7 @@ pre, code {
 }
 
 .btn:hover {
-    background-color: $dark-grey !important;
+    background-color: #250070 !important;
 }
 
 table th{
@@ -67,13 +66,13 @@ table th{
 }
 
 table td{
-    background-color: $dark-grey;
+    background-color: #250070;
     border-color: $overlay-light;
     color: $med-emph;
 }
 
 .flash {
-    color: $dark-grey !important;
+    color: #250070 !important;
     filter: brightness(80%);
 }
 
