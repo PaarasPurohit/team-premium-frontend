@@ -1,0 +1,51 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #000;
+    color: #fff;
+}
+
+.solar-system {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.planet {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #3498db;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin: 10px;
+    position: relative;
+    transition: transform 0.2s;
+}
+
+.planet:hover {
+    transform: scale(1.1);
+}
+
+.planet span {
+    text-align: center;
+}
+
+.planet-info {
+    text-align: center;
+    margin-top: 20px;
+    display: none;
+}
+
+.planet-info h2 {
+    font-size: 24px;
+}
+
+.planet-info p {
+    font-size: 18px;
+}
