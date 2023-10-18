@@ -4,15 +4,15 @@ title: Celestial Object Information
 ---
 
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Astronomy App</title>
 </head>
+
 <body>
-    <input type="date" id="searchDate">
+    <input type="text" id="searchName" placeholder="Enter Celestial Object Name">
     <button onclick="searchCelestialObjects()">Search Celestial Objects</button>
 
     <h2>Search Results:</h2>
@@ -23,6 +23,7 @@ title: Celestial Object Information
 
     <script>
         async function searchCelestialObjects() {
+            const searchName = document.getElementById('searchName').value;
             const searchDate = document.getElementById('searchDate').value;
             const url = `https://astronomy.p.rapidapi.com/api/v2/bodies/positions?latitude=33.775867&longitude=-84.39733&from_date=${searchDate}&to_date=${searchDate}&elevation=166&time=12%3A00%3A00`;
 
@@ -46,7 +47,8 @@ title: Celestial Object Information
                     throw new Error('Unexpected response format');
                 }
 
-                displayCelestialObjects(data.body);
+                const filteredResults = data.body.filter(obj => obj.name.toLowerCase().includes(searchName.toLowerCase()));
+                displayCelestialObjects(filteredResults);
             } catch (error) {
                 console.error('Error searching celestial objects:', error);
             }
@@ -86,4 +88,5 @@ title: Celestial Object Information
         }
     </script>
 </body>
+
 </html>
