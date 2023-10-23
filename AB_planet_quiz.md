@@ -66,7 +66,7 @@ title: Planet Info
         <div id="venus" class="planet">
             <span>Venus</span>
         </div>
-        <div id ="venus" class="planet">
+        <div id ="earth" class="planet">
             <span>Earth</span>
         </div>
     </div>
@@ -91,7 +91,7 @@ title: Planet Info
                     description: "Venus is often called Earth's sister planet due to their similar size and composition."
                 },
                 earth: {
-                    name:"Earth"
+                    name:"Earth",
                     description:"Earth is the third planet from the sun and is the only known planet with life on it."
                 },
                 }
