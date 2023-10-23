@@ -66,7 +66,9 @@ title: Planet Info
         <div id="venus" class="planet">
             <span>Venus</span>
         </div>
-        <!-- Add other planets here -->
+        <div id ="earth" class="planet">
+            <span>Earth</span>
+        </div>
     </div>
     <div class="planet-info">
         <h2>Planet Information</h2>
@@ -88,7 +90,11 @@ title: Planet Info
                     name: "Venus",
                     description: "Venus is often called Earth's sister planet due to their similar size and composition."
                 },
-                // Add information for other planets here
+                earth: {
+                    name:"Earth",
+                    description:"Earth is the third planet from the sun and is the only known planet with life on it."
+                },
+                }
             };
             const planetElements = document.querySelectorAll('.planet');
             const planetNameElement = document.getElementById('planet-name');
@@ -105,7 +111,7 @@ title: Planet Info
                     }
                 });
             });
-        });
+        );
     </script>
 </body>
 </html>

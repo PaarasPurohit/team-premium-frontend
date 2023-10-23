@@ -63,6 +63,47 @@ title: Planet Weight Simulator
                 <tr>
                     <th>Planet</th>
                     <th>Weight</th>
+                    <th>That weighs about as much as...</th>
+                </tr>
+                <tr>
+                    <td>Mercury</td>
+                    <td id="mercuryWeight"></td>
+                    <td id="mercuryComparison"></td>
+                </tr>
+                <tr>
+                    <td>Venus</td>
+                    <td id="venusWeight"></td>
+                    <td id="venusComparison"></td>
+                </tr>
+                <tr>
+                    <td>Earth</td>
+                    <td id="earthWeight"></td>
+                    <td id="earthComparison"></td>
+                </tr>
+                <tr>
+                    <td>Mars</td>
+                    <td id="marsWeight"></td>
+                    <td id="marsComparison"></td>
+                </tr>
+                <tr>
+                    <td>Jupiter</td>
+                    <td id="jupiterWeight"></td>
+                    <td id="jupiterComparison"></td>
+                </tr>
+                <tr>
+                    <td>Saturn</td>
+                    <td id="saturnWeight"></td>
+                    <td id="saturnComparison"></td>
+                </tr>
+                <tr>
+                    <td>Uranus</td>
+                    <td id="uranusWeight"></td>
+                    <td id="uranusComparison"></td>
+                </tr>
+                <tr>
+                    <td>Neptune</td>
+                    <td id="neptuneWeight"></td>
+                    <td id="neptuneComparison"></td>
                 </tr>
             </table>
         </div>
@@ -168,5 +209,35 @@ public class PlanetWeight {
             default: return "Unknown";
         }
     }
+
+    public ArrayList<String> representWeights(ArrayList<Double> weights) {
+        ArrayList<String> comparisons = new ArrayList<String>();
+        
+        for (double i : weights) {
+            if (i >= 0 && i <= 50) {
+                comparisons.add("A bag of dog food");
+            } else if (i > 50 && i <= 100) {
+                comparisons.add("A standard adult bicycle");
+            } else if (i > 100 && i <= 150) {
+                comparisons.add("A large microwave oven");
+            } else if (i > 150 && i <= 200) {
+                comparisons.add("A typical adult male");
+            } else if (i > 200 && i <= 250) {
+                comparisons.add("A full-sized refrigerator");
+            } else if (i > 250 && i <= 300) {
+                comparisons.add("A grand piano");
+            } else if (i > 300 && i <= 350) {
+                comparisons.add("A vending machine");
+            } else if (i > 350 && i <= 400) {
+                comparisons.add("A small motorcycle");
+            } else if (i > 400 && i <= 450) {
+                comparisons.add("A black bear (average weight)");
+            } else if (i > 450 && i <= 500) {
+                comparisons.add("A grand piano with additional weight or a full-grown male lion (average weight)");
+            }
+        }
+        
+        return comparisons;
+    }    
 }
 ```
