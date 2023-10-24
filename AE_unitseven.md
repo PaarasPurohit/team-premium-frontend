@@ -638,12 +638,6 @@ ArrayListHacks.main(null);
 
 ## Find the specified value
 
-![]("https://media.discordapp.net/attachments/1156623830631059597/1166266558839009332/Screenshot_2023-10-23_at_11.46.53_PM.png?ex=6549dd5f&is=6537685f&hm=981517de6ce0f2f487a73ed75d61c58a82081989fe4b6097bddf34c49dbdf11f&=&width=2565&height=708") 
-
-
-
-![]("https://media.discordapp.net/attachments/1156623830631059597/1166266604804374548/Screenshot_2023-10-23_at_11.47.03_PM.png?ex=6549dd6a&is=6537686a&hm=430c6f38774873d17851f9e4c4ddfc6204f8346f4fd37a57b956a3e900e9d9e3&=&width=2565&height=737")
-
 #### The two if check's on the right are wrong because they are using the square bracket subscript notation for an array, and the one on the bottom right is wrong because we are not going to have a guarentee getting inside those bounds. The correct answer is the top right one.
 
 
