@@ -2,8 +2,8 @@
 toc: True
 comments: False
 layout: post
-title: "Unit 7: ArrayList"
-description: "Mastering the concept of Java's ArrayList. AP Exam weighting: 2.5-7.5%."
+title: Unit 7 ArrayList
+description: Mastering the concept of Java's ArrayList. AP Exam weighting is 2.5-7.5%.
 type: tangibles
 permalink: /unit-7-arraylist
 ---
