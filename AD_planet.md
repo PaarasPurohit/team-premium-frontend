@@ -114,50 +114,61 @@ title: Planet Weight Simulator
 > Fetch code to be implemented when backend is deployed
 
 ```javascript
-function postWeight() {
-    // Retrieve the user's weight from the input field
-    const weightInput = document.getElementById("weight");
-    const mass = weightInput.value / 9.81;
+class WeightPoster {
+    constructor(accessToken) {
+        this.accessToken = accessToken;
+    }
 
-    // Create an object with the data to be posted
-    const postData = {
-        mass: mass,
-    };
+    postWeight() {
+        const weightInput = document.getElementById("weight");
+        const mass = weightInput.value / 9.81;
+        const postData = {
+            mass: mass,
+        };
 
-    // Replace 'accessToken' with your actual authentication token
-    const accessToken = 'YOUR_ACCESS_TOKEN';
-
-    // Set up the request headers
-    const headers = new Headers({
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${accessToken}`,
-    });
-
-    // Configure the fetch request
-    const requestOptions = {
-        method: 'POST',
-        headers: headers,
-        body: JSON.stringify(postData),
-    };
-
-    // Make the API request to post the weight data
-    fetch('https://www.astronomer.nighthawkcodingsociety.com/api/users', requestOptions)
-        .then(response => {
-            if (response.ok) {
-                // Successfully posted data
-                alert('Weight data posted successfully!');
-                // You can perform additional actions here if needed
-            } else {
-                // Handle the error if the request fails
-                alert('Failed to post weight data');
-                // You can handle the error in a way that suits your application
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            // Handle the error if fetch itself encounters an issue
+        const headers = new Headers({
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.accessToken}`,
         });
+
+        const requestOptions = {
+            method: 'POST',
+            headers: headers,
+            body: JSON.stringify(postData),
+        };
+
+        fetch('https://www.astronomer.nighthawkcodingsociety.com/api/users', requestOptions)
+            .then(response => {
+                if (response.ok) {
+                    this.handleSuccess();
+                } else {
+                    this.handleError();
+                }
+            })
+            .catch(error => {
+                this.handleFetchError(error);
+            });
+    }
+
+    handleSuccess() {
+        alert('Weight data posted successfully!');
+    }
+
+    handleError() {
+        alert('Failed to post weight data');
+    }
+
+    handleFetchError(error) {
+        console.error('Error:', error);
+    }
 }
+const accessToken = 'YOUR_ACCESS_TOKEN'; // replace with password later on
+
+const weightPoster = new WeightPoster(accessToken);
+
+document.getElementById("postButton").addEventListener("click", () => {
+    weightPoster.postWeight();
+});
 ```
 
 ### Java
