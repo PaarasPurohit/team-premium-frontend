@@ -69,6 +69,21 @@ title: Planet Info
         <div id ="earth" class="planet">
             <span>Earth</span>
         </div>
+        <div id ="jupiter" class="planet">
+            <span>Jupiter</span>
+        </div>
+        <div id ="saturn" class="planet">
+            <span>Saturn</span>
+        </div>
+        <div id ="uranus" class="planet">
+            <span>Jupiter</span>
+        </div>
+        <div id ="neptune" class="planet">
+            <span>Jupiter</span>
+        </div>
+        <div id ="pluto" class="planet">
+            <span>Pluto</span>
+        </div>
     </div>
     <div class="planet-info">
         <h2>Planet Information</h2>
@@ -94,8 +109,7 @@ title: Planet Info
                     name:"Earth",
                     description:"Earth is the third planet from the sun and is the only known planet with life on it."
                 },
-                }
-            };
+            }
             const planetElements = document.querySelectorAll('.planet');
             const planetNameElement = document.getElementById('planet-name');
             const planetDescriptionElement = document.getElementById('planet-description');
@@ -111,7 +125,7 @@ title: Planet Info
                     }
                 });
             });
-        );
+        });
     </script>
 </body>
 </html>
