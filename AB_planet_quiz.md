@@ -3,7 +3,7 @@ layout: post
 title: Planet Info 
 ---
 <html lang="en">
-<head>
+<head> 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
@@ -46,7 +46,7 @@ title: Planet Info
 <body>
     <div class="solar-system">
         <div id="sun" class="planet">
-            <img src = "https://github.com/Henerystone/ws2/assets/96998793/a088b618-3191-4e25-86ef-cbb038723c24" alt="sun">
+            <img src = "https://github.com/Henerystone/ws2/assets/96998793/409afa33-356a-489c-bbac-f53135b222ee" alt="sun">
         </div>
         <div id="mercury" class="planet">
             <img src = "https://github.com/Henerystone/ws2/assets/96998793/f6550d1d-30f1-40a2-a3c9-8439587b589e" alt="mercury">
@@ -81,7 +81,7 @@ title: Planet Info
             <span>Saturn</span>
         </div>  
         <div id ="uranus" class="planet">
-            <img src = "https://github.com/Henerystone/ws2/assets/96998793/e5718b84-d291-42e0-800d-578e0e711225" alt="uranus">
+            <img src = "https://github.com/Henerystone/ws2/assets/96998793/2f23bcb0-b0e9-4ec4-aa0e-fc181867da06" alt="uranus">
             <span>Uranus</span>
         </div>
         <div id ="neptune" class="planet">
