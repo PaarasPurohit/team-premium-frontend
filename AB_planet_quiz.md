@@ -129,3 +129,9 @@ title: Planet Info
     </script>
 </body>
 </html>
+
+Information about each celestial object is good, but how does that relate to you? Find out <a href="{{ site.baseurl }}/AD_planet.html">here</a>.
+
+Or do you want to get information on more celestial objects than just the ones listed? Get it <a href="{{ site.baseurl }}/AA_celestial.html">here</a>.
+
+Or do you have really specific questions? Ask them <a href="{{ site.baseurl }}/AC_ai.html">here</a>.
