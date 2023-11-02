@@ -74,12 +74,10 @@ The project relies on the following dependencies:
 
 I included this because I ran into some errors relating to project dependencies and the `pom.xml` file
 
-- Spring Boot: Provides the foundation for the application.
 - Spring Data JPA: Simplifies database interactions.
 - Jackson: Handles JSON serialization and deserialization.
 - Java HTTP Client: Enables HTTP requests.
 - H2 Database: An in-memory database for development purposes.
-- Spring Web: Facilitates web-based functionality.
 
 ## 7. Common Errors and Troubleshooting 
 
