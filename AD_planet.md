@@ -58,7 +58,7 @@ title: Planet Weight Simulator
         <div class="content">
             <p>Enter your weight in pounds:</p>
             <input id="weight" type="text">
-            <button type="submit" onclick="postWeight()">Submit</button>
+            <button type="submit" onclick="getWeight()">Submit</button>
             <table id="planetWeights">
                 <tr>
                     <th>Planet</th>
@@ -105,150 +105,76 @@ title: Planet Weight Simulator
                     <td id="neptuneWeight"></td>
                     <td id="neptuneComparison"></td>
                 </tr>
+                <tr>
+                    <td>Moon</td>
+                    <td id="moonWeight"></td>
+                    <td id="moonComparison"></td>
+                </tr>
+                <tr>
+                    <td>Pluto</td>
+                    <td id="plutoWeight"></td>
+                    <td id="plutoComparison"></td>
+                </tr>
             </table>
         </div>
+        <script>
+            function getWeight() {
+                const weightInput = document.getElementById("weight");
+                const weight = parseFloat(weightInput.value);
+                if (isNaN(weight) || weight <= 0) {
+                    alert("Please enter a valid positive weight in pounds.");
+                    return;
+                }
+                const mass = weight * 0.453592;
+                const headers = new Headers({
+                    'Content-Type': 'application/json',
+                });
+                const requestOptions = {
+                    method: 'GET',
+                    mode: 'cors',
+                    credentials: 'same-origin',
+                    headers: headers,
+                };
+                fetch(`http://localhost:8085/planet_weights/${mass}`, requestOptions)
+                    .then(response => response.json())
+                    .then(data => updateTable(data))
+                    .catch(error => {
+                        console.error("Error:", error);
+                        alert("An error occurred while fetching data from the API.");
+                    });
+            }
+    function updateTable(data) {
+        console.log(data);
+        const planets = [
+            "mercury",
+            "venus",
+            "earth",
+            "mars",
+            "jupiter",
+            "saturn",
+            "uranus",
+            "neptune",
+            "moon",
+            "pluto"
+        ];
+        if (Array.isArray(data.comparisons) && Array.isArray(data.weights) && data.comparisons.length === planets.length && data.weights.length === planets.length) {
+            for (let i = 0; i < planets.length; i++) {
+                const planet = planets[i];
+                const weightElement = document.getElementById(`${planet}Weight`);
+                const comparisonElement = document.getElementById(`${planet}Comparison`);
+                weightElement.textContent = data.weights[i];
+                comparisonElement.textContent = data.comparisons[i];
+            }
+        } else {
+            console.error("Data structure does not match expectations");
+        }
+    }
+        </script>
     </body>
 </html>
 
-### JavaScript
-> Fetch code to be implemented when backend is deployed
+Wanna know more about planets besides your weight on them? Learn about them <a href="{{ site.baseurl }}/AB_planet_quiz.html">here</a>.
 
-```javascript
-class WeightPoster {
-    constructor(accessToken) {
-        this.accessToken = accessToken;
-    }
+Or do you have really specific questions? Ask them <a href="{{ site.baseurl }}/AC_ai.html">here</a>.
 
-    postWeight() {
-        const weightInput = document.getElementById("weight");
-        const mass = weightInput.value / 9.81;
-        const postData = {
-            mass: mass,
-        };
-
-        const headers = new Headers({
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${this.accessToken}`,
-        });
-
-        const requestOptions = {
-            method: 'POST',
-            headers: headers,
-            body: JSON.stringify(postData),
-        };
-
-        fetch('https://www.astronomer.nighthawkcodingsociety.com/api/users', requestOptions)
-            .then(response => {
-                if (response.ok) {
-                    this.handleSuccess();
-                } else {
-                    this.handleError();
-                }
-            })
-            .catch(error => {
-                this.handleFetchError(error);
-            });
-    }
-
-    handleSuccess() {
-        alert('Weight data posted successfully!');
-    }
-
-    handleError() {
-        alert('Failed to post weight data');
-    }
-
-    handleFetchError(error) {
-        console.error('Error:', error);
-    }
-}
-const accessToken = 'YOUR_ACCESS_TOKEN'; // replace with password later on
-
-const weightPoster = new WeightPoster(accessToken);
-
-document.getElementById("postButton").addEventListener("click", () => {
-    weightPoster.postWeight();
-});
-```
-
-### Java
-> Backend code that will take the user's mass and display planet weights.
-
-```java
-import java.util.ArrayList;
-
-public class PlanetWeight {
-
-    private final double mercuryGravity = 3.7;
-    private final double venusGravity = 8.87;
-    private final double earthGravity = 9.81;
-    private final double marsGravity = 3.721;
-    private final double jupiterGravity = 24.79;
-    private final double saturnGravity = 10.44;
-    private final double uranusGravity = 8.69;
-    private final double neptuneGravity = 11.15;
-
-    public ArrayList<Double> calculatePlanetWeights(double mass) {
-        if (mass <= 0) {
-            throw new IllegalArgumentException("Mass must be positive.");
-        }
-
-        ArrayList<Double> weights = new ArrayList<Double>();
-
-        weights.add(mass * mercuryGravity);
-        weights.add(mass * venusGravity);
-        weights.add(mass * earthGravity);
-        weights.add(mass * marsGravity);
-        weights.add(mass * jupiterGravity);
-        weights.add(mass * saturnGravity);
-        weights.add(mass * uranusGravity);
-        weights.add(mass * neptuneGravity);
-
-        return weights;
-    }
-
-    private static String getPlanetName(int index) {
-        switch (index) {
-            case 0: return "Mercury";
-            case 1: return "Venus";
-            case 2: return "Earth";
-            case 3: return "Mars";
-            case 4: return "Jupiter";
-            case 5: return "Saturn";
-            case 6: return "Uranus";
-            case 7: return "Neptune";
-            default: return "Unknown";
-        }
-    }
-
-    public ArrayList<String> representWeights(ArrayList<Double> weights) {
-        ArrayList<String> comparisons = new ArrayList<String>();
-        
-        for (double i : weights) {
-            if (i >= 0 && i <= 50) {
-                comparisons.add("A bag of dog food");
-            } else if (i > 50 && i <= 100) {
-                comparisons.add("A standard adult bicycle");
-            } else if (i > 100 && i <= 150) {
-                comparisons.add("A large microwave oven");
-            } else if (i > 150 && i <= 200) {
-                comparisons.add("A typical adult male");
-            } else if (i > 200 && i <= 250) {
-                comparisons.add("A full-sized refrigerator");
-            } else if (i > 250 && i <= 300) {
-                comparisons.add("A grand piano");
-            } else if (i > 300 && i <= 350) {
-                comparisons.add("A vending machine");
-            } else if (i > 350 && i <= 400) {
-                comparisons.add("A small motorcycle");
-            } else if (i > 400 && i <= 450) {
-                comparisons.add("A black bear (average weight)");
-            } else if (i > 450 && i <= 500) {
-                comparisons.add("A grand piano with additional weight or a full-grown male lion (average weight)");
-            }
-        }
-        
-        return comparisons;
-    }    
-}
-```
+Or do you want to get information on more celestial objects than just the ones listed? Get it <a href="{{ site.baseurl }}/AA_celestial.html">here</a>.
