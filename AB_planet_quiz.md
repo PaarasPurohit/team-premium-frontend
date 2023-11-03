@@ -1,6 +1,5 @@
 ---
 layout: post
-title: Planet Info 
 ---
 <html lang="en">
 <head> 
@@ -14,6 +13,9 @@ title: Planet Info
             padding: 0;
             background-color: #000;
             color: #fff;
+        }
+        .txt {
+            align-items: center;
         }
         .solar-system {
             display: flex;
@@ -47,6 +49,7 @@ title: Planet Info
     <div class="solar-system">
         <div id="sun" class="planet">
             <img src = "https://github.com/Henerystone/ws2/assets/96998793/409afa33-356a-489c-bbac-f53135b222ee" alt="sun">
+            <a href = "#planet-description"></a>
         </div>
         <div id="mercury" class="planet">
             <img src = "https://github.com/Henerystone/ws2/assets/96998793/f6550d1d-30f1-40a2-a3c9-8439587b589e" alt="mercury">
@@ -165,9 +168,10 @@ title: Planet Info
     </script>
 </body>
 </html>
-
-Information about each celestial object is good, but how does that relate to you? Find out <a href="{{ site.baseurl }}/AD_planet.html">here</a>.
-
-Or do you want to get information on more celestial objects than just the ones listed? Get it <a href="{{ site.baseurl }}/AA_celestial.html">here</a>.
-
-Or do you have really specific questions? Ask them <a href="{{ site.baseurl }}/AC_ai.html">here</a>.
+<br>
+<br>
+<div class = "txt">
+    Information about each celestial object is good, but how does that relate to you? Find out <a href="{{ site.baseurl }}/AD_planet.html">here</a>.
+    Or do you want to get information on more celestial objects than just the ones listed? Get it <a href="{{ site.baseurl }}/AA_celestial.html">here</a>.
+    Or do you have really specific questions? Ask them <a href="{{ site.baseurl }}/AC_ai.html">here</a>.
+</div>
