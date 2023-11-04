@@ -1,9 +1,9 @@
 ---
 layout: post
-title: Planet Info 
+title: Planet Info
 ---
 <html lang="en">
-<head>
+<head> 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
@@ -14,6 +14,9 @@ title: Planet Info
             padding: 0;
             background-color: #000;
             color: #fff;
+        }
+        .txt {
+            align-items: center;
         }
         .solar-system {
             display: flex;
@@ -46,55 +49,44 @@ title: Planet Info
 <body>
     <div class="solar-system">
         <div id="sun" class="planet">
-            <img src = "https://github.com/Henerystone/ws2/assets/96998793/a088b618-3191-4e25-86ef-cbb038723c24" alt="sun">
+            <img src = "https://github.com/Henerystone/ws2/assets/96998793/409afa33-356a-489c-bbac-f53135b222ee" alt="sun">
+            <a href = "#planet-description"></a>
         </div>
         <div id="mercury" class="planet">
             <img src = "https://github.com/Henerystone/ws2/assets/96998793/f6550d1d-30f1-40a2-a3c9-8439587b589e" alt="mercury">
-            <span>Mercury</span>
         </div>
         <div id="venus" class="planet">
             <img src = "https://github.com/Henerystone/ws2/assets/96998793/c442ac64-a9f2-40a0-9d7b-df70e50854ff" alt="venus">
-            <span>Venus</span>
         </div>
         <div id ="earth" class="planet">
             <img src = "https://github.com/Henerystone/ws2/assets/96998793/a5ec48d6-432f-4029-a02d-600e31e85d7e" alt="earth">
-            <span>Earth</span>
         </div>
         <div id ="moon" class="planet">
-            <img src = "https://github.com/Henerystone/ws2/assets/96998793/a9e6d019-06a3-4bc3-afc2-b1cd4b4c8284" alt="moon">
-            <span>Moon</span>
+            <img src = "https://github.com/Henerystone/ws2/assets/96998793/6db8d789-a950-46f5-9d59-1641bc7843d3" alt="moon">
         </div>
         <div id ="mars" class="planet">
-            <img src = "https://github.com/Henerystone/ws2/assets/96998793/dd24df81-0d3b-4697-8d4d-93b3a41af8e0" alt="sun">
-            <span>Mars</span>
+            <img src = "https://github.com/Henerystone/ws2/assets/96998793/5a559a23-5839-4bb1-aaf6-2d20a2b57c3a" alt="sun">
         </div>
         <div id ="asteroid" class="planet">
-            <img src = "sun.jpg" alt="asteroids">
-            <span>Asteroid Belt</span>
+            <img src = "https://github.com/Henerystone/ws2/assets/96998793/ad053809-f540-417c-b205-fae0dc4cc741" alt="asteroids">
         </div>
         <div id ="jupiter" class="planet">
-            <img src = "https://github.com/Henerystone/ws2/assets/96998793/bfffa375-5a2c-48c7-84f8-fae7c7b39e32" alt="jupiter">
-            <span>Jupiter</span>
+            <img src = "https://github.com/Henerystone/ws2/assets/96998793/1eb13191-aaa9-43ce-ae9c-298268abd8b9" alt="jupiter">
         </div>
         <div id ="saturn" class="planet">
             <img src = "https://github.com/Henerystone/ws2/assets/96998793/974af84a-e5f8-43a1-a781-906b9140fe2c" alt="saturn">
-            <span>Saturn</span>
         </div>  
         <div id ="uranus" class="planet">
-            <img src = "https://github.com/Henerystone/ws2/assets/96998793/e5718b84-d291-42e0-800d-578e0e711225" alt="uranus">
-            <span>Uranus</span>
+            <img src = "https://github.com/Henerystone/ws2/assets/96998793/2f23bcb0-b0e9-4ec4-aa0e-fc181867da06" alt="uranus">
         </div>
         <div id ="neptune" class="planet">
             <img src = "https://github.com/Henerystone/ws2/assets/96998793/3c57bc67-c7a4-4404-afcc-4247246b26df" alt="neptune">
-            <span>Neptune</span>
         </div>
         <div id ="pluto" class="planet">
             <img src = "https://github.com/Henerystone/ws2/assets/96998793/9307c967-09cf-4a50-bbe4-9200f3448254" alt="pluto">
-            <span>Pluto</span>
         </div>
         <div id ="belt" class="planet">
-            <img src = "sun.jpg" alt="belt">
-            <span>Kuiper Belt</span>
+            <img src = "https://github.com/Henerystone/ws2/assets/96998793/ad053809-f540-417c-b205-fae0dc4cc741" alt="belt">
         </div>
     </div>
     <div class="planet-info">
@@ -177,9 +169,10 @@ title: Planet Info
     </script>
 </body>
 </html>
-
-Information about each celestial object is good, but how does that relate to you? Find out <a href="{{ site.baseurl }}/AD_planet.html">here</a>.
-
-Or do you want to get information on more celestial objects than just the ones listed? Get it <a href="{{ site.baseurl }}/AA_celestial.html">here</a>.
-
-Or do you have really specific questions? Ask them <a href="{{ site.baseurl }}/AC_ai.html">here</a>.
+<br>
+<br>
+<div class = "txt">
+    Information about each celestial object is good, but how does that relate to you? Find out <a href="{{ site.baseurl }}/AD_planet.html">here</a>.
+    Or do you want to get information on more celestial objects than just the ones listed? Get it <a href="{{ site.baseurl }}/AA_celestial.html">here</a>.
+    Or do you have really specific questions? Ask them <a href="{{ site.baseurl }}/AC_ai.html">here</a>.
+</div>
