@@ -6,6 +6,7 @@ title: Paaras Purohit - Individual Review
 description: Recap of key events and learnings from developing Team Premium's Astronomer
 type: tangibles
 courses: { compsci: {week: 6} }
+permalink: /paaras-individual-review
 ---
 
 # Issue Recap
