@@ -1,5 +1,6 @@
 ---
 layout: post
+title: Planet Info
 ---
 <html lang="en">
 <head> 
