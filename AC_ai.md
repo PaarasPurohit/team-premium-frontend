@@ -28,59 +28,55 @@ title: AstronomyAI
 <script>
     async function requestAPI() {
         const inputQuery = document.getElementById('inputQuery').value;
-        const url = 'https://chatgpt-best-price.p.rapidapi.com/v1/chat/completions';
-        const options = {
+        const response = await fetch('http://localhost:8085/fetch', {
             method: 'POST',
             headers: {
-                'content-type': 'application/json',
-                'X-RapidAPI-Key': '47adfc21bcmsh44e5abcedbf2a29p150b62jsn37a5f5ecf19a',
-                'X-RapidAPI-Host': 'chatgpt-best-price.p.rapidapi.com'
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                model: 'gpt-3.5-turbo',
-                messages: [{
-                    role: 'user',
-                    content: inputQuery
-                }]
-            })
-        };
+            body: JSON.stringify({ query: inputQuery })
+        });
 
         try {
-            const response = await fetch(url, options);
             const result = await response.json();
-            const botResponse = result.choices[0].message.content.replace(/"/g, '');
-
-            saveToHistory(inputQuery, botResponse);
+            const botResponse = result.response; // Adjust according to the backend response structure
             document.getElementById('response').innerText = botResponse;
+            saveToHistory(inputQuery, botResponse); // We are calling saveToHistory just to show the newly added query in history without refreshing
         } catch (error) {
             console.error(error);
         }
     }
 
-    function saveToHistory(question, answer) {
-        let history = localStorage.getItem('history');
-        if (!history) {
-            history = [];
-        } else {
-            history = JSON.parse(history);
+    async function saveToHistory(question, answer) {
+        // This function now simply adds the new entry to the local view without saving again to the backend
+        let historyDiv = document.getElementById('history');
+        let entry = document.createElement('p');
+        entry.innerHTML = `<strong>Q:</strong> ${question} <br> <strong>A:</strong> ${answer}`;
+        historyDiv.appendChild(entry);
+    }
+
+    async function viewHistory() {
+        try {
+            const response = await fetch('http://localhost:8085/history');
+            const history = await response.json();
+            const historyDiv = document.getElementById('history');
+            historyDiv.innerHTML = '';
+
+            history.forEach(item => {
+                const p = document.createElement('p');
+                p.innerHTML = `<strong>Q:</strong> ${item.query} <br> <strong>A:</strong> ${item.response}`;
+                historyDiv.appendChild(p);
+            });
+        } catch (error) {
+            console.error('Error fetching history', error);
         }
-        history.push({ question, answer });
-        localStorage.setItem('history', JSON.stringify(history));
     }
 
-    function viewHistory() {
-        const history = JSON.parse(localStorage.getItem('history')) || [];
-        const historyDiv = document.getElementById('history');
-        historyDiv.innerHTML = '';
-        history.forEach(item => {
-            const p = document.createElement('p');
-            p.innerHTML = `<strong>Q:</strong> ${item.question} <br> <strong>A:</strong> ${item.answer}`;
-            historyDiv.appendChild(p);
-        });
-    }
-
-    function clearHistory() {
-        localStorage.removeItem('history');
-        document.getElementById('history').innerHTML = '';
+    async function clearHistory() {
+        try {
+            await fetch('http://localhost:8085/history', { method: 'DELETE' });
+            document.getElementById('history').innerHTML = '';
+        } catch (error) {
+            console.error('Error clearing history', error);
+        }
     }
 </script>

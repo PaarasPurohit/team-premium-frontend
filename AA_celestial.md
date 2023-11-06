@@ -55,68 +55,141 @@ title: Celestial Object Information
         }
     </style>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Astronomy App</title>
+    <title>Celestial Object Information</title>
 </head>
 <body>
-    <!-- Input field for entering the celestial object name -->
-    <input type="text" id="searchName" placeholder="Enter Celestial Object Name">
-    <!-- Input field for entering the date (e.g., 2017-12-20) -->
-    <input type="text" id="searchDate" placeholder="Enter Date (e.g., 2017-12-20)">
-    <!-- Button to trigger the search for celestial objects -->
-    <button onclick="searchCelestialObjects()">Search Celestial Objects</button>
-    <!-- Display area for search results -->
+    <input type="text" id="searchInput" placeholder="Search for Celestial Objects">
+    <button onclick="searchCelestialObjects()">Search</button>
+    <button onclick="displayAllData()">Display All Data</button>
+    <div id="altitudeAzimuthDescriptions">
+        <p style="font-weight: bold;">Altitude and Azimuth Descriptions:</p>
+        <p><strong>Altitude</strong>: Altitude is the angle between a celestial object (e.g., a star or planet) and an observer's horizon. It measures how high above the horizon the object appears.</p>
+        <p><strong>Azimuth</strong>: Azimuth is the compass direction from which a celestial object can be seen. It represents the angle clockwise from the north direction to the object's location.</p>
+    </div>
     <h2>Search Results:</h2>
-    <ul id="searchResults"></ul>
-    <!-- Display area for favorite celestial objects -->
+    <table id="searchResultsTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Date</th>
+                <th>Distance (km)</th>
+                <th>Altitude (degrees)</th>
+                <th>Azimuth (degrees)</th>
+            </tr>
+        </thead>
+        <tbody id="searchResults"></tbody>
+    </table>
     <h2>Favorites</h2>
     <ul id="favorites"></ul>
     <script>
         async function searchCelestialObjects() {
-            // Get the input values for name and date
-            const searchName = document.getElementById('searchName').value;
-            const searchDate = document.getElementById('searchDate').value;
-            // Check if the input fields are empty
-            if (!searchName || !searchDate) {
-                alert("Please enter both a name and a date.");
-                return;
-            }
-            // Construct the URL for the API request using the input values
-            const url = `https://astronomy.p.rapidapi.com/api/v2/bodies/positions?latitude=33.775867&longitude=-84.39733&from_date=${searchDate}&to_date=${searchDate}&elevation=166&time=12%3A00%3A00`;
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             try {
-                const response = await fetch(url, {
-                    method: 'GET',
-                    headers: {
-                        'X-RapidAPI-Key': '8401db6433msh3a46dd5bf23ad2ep19a280jsn48536a994246',
-                        'X-RapidAPI-Host': 'astronomy.p.rapidapi.com'
-                    }
-                });
+                const response = await fetch('http://localhost:8085/api/celestial-data/list');
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                const data = await response.json();
-                // Check if the response format is as expected
-                if (!data || !data.body || !Array.isArray(data.body)) {
-                    throw new Error('Unexpected response format');
-                }
-                const filteredResults = data.body.filter(obj => obj.name.toLowerCase().includes(searchName.toLowerCase()));
-                displayCelestialObjects(filteredResults);
+                const celestialData = await response.json();
+                clearTable();
+                displaySearchResults(celestialData, searchTerm);
             } catch (error) {
-                console.error('Error searching celestial objects:', error);
+                console.error('Error fetching celestial objects:', error);
             }
         }
-        function displayCelestialObjects(celestialObjects) {
+        function clearTable() {
+            const table = document.getElementById('searchResultsTable');
+            const tbody = table.getElementsByTagName('tbody')[0];
+            tbody.innerHTML = '';
+        }
+        function displaySearchResults(celestialData, searchTerm) {
             const resultsContainer = document.getElementById('searchResults');
-            resultsContainer.innerHTML = ''; 
-            celestialObjects.forEach(obj => {
-                const listItem = document.createElement('li');
-                listItem.textContent = obj.name;
-                const addToFavoritesBtn = document.createElement('button');
-                addToFavoritesBtn.textContent = 'Add to Favorites';
-                addToFavoritesBtn.addEventListener('click', () => addToFavorites(obj));
-                listItem.appendChild(addToFavoritesBtn);
-                resultsContainer.appendChild(listItem);
+            celestialData.forEach(entry => {
+                entry.data.table.rows.forEach(row => {
+                    const data = row.cells[0];
+                    if (data.name && data.name.toLowerCase().includes(searchTerm)) {
+                        const newRow = resultsContainer.insertRow();
+                        newRow.insertCell().textContent = data.name;
+                        newRow.insertCell().textContent = data.type;
+                        newRow.insertCell().textContent = entry.data.dates.from;
+                        newRow.insertCell().textContent = data.distance.fromEarth.km || 'N/A';
+                        newRow.insertCell().textContent = data.position.horizontal.altitude.degrees || 'N/A';
+                        newRow.insertCell().textContent = data.position.horizontal.azimuth.degrees || 'N/A';
+                        newRow.insertCell().textContent = data.constellation ? data.constellation.name || 'N/A' : 'N/A';
+                        const addToFavoritesBtn = document.createElement('button');
+                        addToFavoritesBtn.textContent = 'Add to Favorites';
+                        addToFavoritesBtn.addEventListener('click', () => addToFavorites(entry));
+                        newRow.appendChild(addToFavoritesBtn);
+                    }
+                });
+            });
+        }
+        async function displayAllData() {
+            try {
+                const response = await fetch('http://localhost:8085/api/celestial-data/list');
+                if (!response.ok) {
+                    console.error('Network response was not ok');
+                    return;
+                }
+                const celestialData = await response.json();
+                clearTable();
+                displayAllDataResults(celestialData);
+                displayConstellations(celestialData);
+            } catch (error) {
+                console.error('Error fetching celestial objects:', error);
+            }
+        }
+        async function displayAllDataResults(celestialData) {
+            const resultsContainer = document.getElementById('searchResults');
+            celestialData.forEach(entry => {
+                entry.data.table.rows.forEach(row => {
+                    const data = row.cells[0];
+                    const newRow = resultsContainer.insertRow();
+                    newRow.insertCell().textContent = data.name || data.extraInfo.magnitude;
+                    newRow.insertCell().textContent = data.type || 'N/A';
+                    newRow.insertCell().textContent = entry.data.dates.from;
+                    newRow.insertCell().textContent = data.distance.fromEarth.km || 'N/A';
+                    newRow.insertCell().textContent = data.position.horizontal.altitude.degrees || 'N/A';
+                    newRow.insertCell().textContent = data.position.horizontal.azimuth.degrees || 'N/A';
+                    const constellation = data.constellation ? data.constellation.name || 'N/A' : 'N/A';
+                    newRow.insertCell().textContent = constellation;
+                    const addToFavoritesBtn = document.createElement('button');
+                    addToFavoritesBtn.textContent = 'Add to Favorites';
+                    addToFavoritesBtn.addEventListener('click', () => addToFavorites(entry));
+                    newRow.appendChild(addToFavoritesBtn);
+                });
+            });
+        }
+        async function displayConstellations(celestialData) {
+            const constellationsTable = document.getElementById('constellationsTable');
+            const constellationsBody = document.getElementById('constellations');
+            const constellationsSet = new Set();
+            celestialData.forEach(entry => {
+                if (entry.data && entry.data.table && entry.data.table.rows) {
+                    entry.data.table.rows.forEach(row => {
+                        if (row.cells) {
+                            row.cells.forEach(cell => {
+                                if (cell.data && cell.data.constellation) {
+                                    const constellation = cell.data.constellation.name;
+                                    console.log('Constellation:', constellation); // Debugging
+                                    if (constellation) {
+                                        constellationsSet.add(constellation);
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+            const uniqueConstellations = Array.from(constellationsSet);
+            console.log('Unique Constellations:', uniqueConstellations); // Debugging
+            constellationsBody.innerHTML = '';
+            uniqueConstellations.forEach(constellationName => {
+                const newRow = constellationsBody.insertRow();
+                const nameCell = newRow.insertCell();
+                nameCell.textContent = constellationName;
             });
         }
         let favorites = [];
@@ -126,10 +199,10 @@ title: Celestial Object Information
         }
         function displayFavorites() {
             const favoritesContainer = document.getElementById('favorites');
-            favoritesContainer.innerHTML = ''; // Clear previous favorites
-            favorites.forEach(obj => {
+            favoritesContainer.innerHTML = '';
+            favorites.forEach(entry => {
                 const listItem = document.createElement('li');
-                listItem.textContent = obj.name;
+                listItem.textContent = entry.data.table.rows[0].cells[0].name;
                 favoritesContainer.appendChild(listItem);
             });
         }
