@@ -57,79 +57,82 @@ title: Celestial Object Information
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Astronomy App</title>
+    <title>Celestial Object Information</title>
 </head>
 <body>
-    <!-- Input field for entering the celestial object name -->
-    <input type="text" id="searchName" placeholder="Enter Celestial Object Name">
-    <!-- Input field for entering the date (e.g., 2017-12-20) -->
-    <input type="text" id="searchDate" placeholder="Enter Date (e.g., 2017-12-20)">
-    <!-- Button to trigger the search for celestial objects -->
-    <button onclick="searchCelestialObjects()">Search Celestial Objects</button>
-    <!-- Display area for search results -->
+    <!-- Input field for entering the search term -->
+    <input type="text" id="searchInput" placeholder="Search for Celestial Objects">
+    <button onclick="searchCelestialObjects()">Search</button>
+    <!-- Display area for search results in a table -->
     <h2>Search Results:</h2>
-    <ul id="searchResults"></ul>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+            </tr>
+        </thead>
+        <tbody id="searchResults"></tbody>
+    </table>
     <!-- Display area for favorite celestial objects -->
     <h2>Favorites</h2>
     <ul id="favorites"></ul>
     <script>
         async function searchCelestialObjects() {
-            // Get the input values for name and date
-            const searchName = document.getElementById('searchName').value;
-            const searchDate = document.getElementById('searchDate').value;
-            // Check if the input fields are empty
-            if (!searchName || !searchDate) {
-                alert("Please enter both a name and a date.");
-                return;
-            }
-            // Construct the URL for the API request using the input values
-            const url = `https://astronomy.p.rapidapi.com/api/v2/bodies/positions?latitude=33.775867&longitude=-84.39733&from_date=${searchDate}&to_date=${searchDate}&elevation=166&time=12%3A00%3A00`;
+            // Get the search term input by the user
+            const searchTerm = document.getElementById('searchInput').value;
+
+            // Fetch celestial data list from the API
             try {
-                const response = await fetch(url, {
-                    method: 'GET',
-                    headers: {
-                        'X-RapidAPI-Key': '8401db6433msh3a46dd5bf23ad2ep19a280jsn48536a994246',
-                        'X-RapidAPI-Host': 'astronomy.p.rapidapi.com'
-                    }
-                });
+                const response = await fetch('http://localhost:8085/api/celestial-data/list');
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                const data = await response.json();
-                // Check if the response format is as expected
-                if (!data || !data.body || !Array.isArray(data.body)) {
-                    throw new Error('Unexpected response format');
-                }
-                const filteredResults = data.body.filter(obj => obj.name.toLowerCase().includes(searchName.toLowerCase()));
-                displayCelestialObjects(filteredResults);
+                const celestialObjects = await response.json();
+
+                // Filter the results based on the user's search term
+                const filteredResults = celestialObjects.filter(obj => obj.data.table.rows[0].cells[0].name.toLowerCase().includes(searchTerm.toLowerCase()));
+
+                // Display the search results in a table
+                displaySearchResults(filteredResults);
             } catch (error) {
-                console.error('Error searching celestial objects:', error);
+                console.error('Error fetching celestial objects:', error);
             }
         }
-        function displayCelestialObjects(celestialObjects) {
+
+        function displaySearchResults(celestialObjects) {
             const resultsContainer = document.getElementById('searchResults');
-            resultsContainer.innerHTML = ''; 
+            resultsContainer.innerHTML = '';
+
             celestialObjects.forEach(obj => {
-                const listItem = document.createElement('li');
-                listItem.textContent = obj.name;
+                const row = resultsContainer.insertRow();
+                const nameCell = row.insertCell(0);
+                const typeCell = row.insertCell(1);
+
+                nameCell.textContent = obj.data.table.rows[0].cells[0].name;
+                typeCell.textContent = obj.data.table.rows[0].cells[0].type;
+
                 const addToFavoritesBtn = document.createElement('button');
                 addToFavoritesBtn.textContent = 'Add to Favorites';
                 addToFavoritesBtn.addEventListener('click', () => addToFavorites(obj));
-                listItem.appendChild(addToFavoritesBtn);
-                resultsContainer.appendChild(listItem);
+                row.appendChild(addToFavoritesBtn);
             });
         }
+
         let favorites = [];
+
         function addToFavorites(celestialObject) {
             favorites.push(celestialObject);
             displayFavorites();
         }
+
         function displayFavorites() {
             const favoritesContainer = document.getElementById('favorites');
-            favoritesContainer.innerHTML = ''; // Clear previous favorites
+            favoritesContainer.innerHTML = '';
+
             favorites.forEach(obj => {
                 const listItem = document.createElement('li');
-                listItem.textContent = obj.name;
+                listItem.textContent = obj.data.table.rows[0].cells[0].name;
                 favoritesContainer.appendChild(listItem);
             });
         }
