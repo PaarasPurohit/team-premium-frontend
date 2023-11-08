@@ -88,7 +88,7 @@ title: Celestial Object Information
         async function searchCelestialObjects() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             try {
-                const response = await fetch('http://localhost:8085/api/celestial-data/list');
+                const response = await fetch('https://teampremium.stu.nighthawkcodingsociety.com/api/celestial-data/list');
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -128,7 +128,7 @@ title: Celestial Object Information
         }
         async function displayAllData() {
             try {
-                const response = await fetch('http://localhost:8085/api/celestial-data/list');
+                const response = await fetch('https://teampremium.stu.nighthawkcodingsociety.com/api/celestial-data/list');
                 if (!response.ok) {
                     console.error('Network response was not ok');
                     return;
