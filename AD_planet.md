@@ -135,7 +135,7 @@ title: Planet Weight Simulator
                     credentials: 'same-origin',
                     headers: headers,
                 };
-                fetch(`http://localhost:8085/planet_weights/${mass}`, requestOptions)
+                fetch(`http://localhost:8035/planet_weights/${mass}`, requestOptions)
                     .then(response => response.json())
                     .then(data => updateTable(data))
                     .catch(error => {
